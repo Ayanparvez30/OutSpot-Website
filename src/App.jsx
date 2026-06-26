@@ -127,9 +127,13 @@ function Countdown() {
 // signup lands in the inbox automatically.
 const WAITLIST_EMAIL = 'ayanparvez30@gmail.com';
 
-// Placeholder link the QR encodes / the store badges point to. Swap for the
-// real App Store + Google Play URLs (and a deep link in the QR) once live.
+// Placeholder link the QR encodes. Swap for a real download/landing link once
+// live (a QR can only encode one URL).
 const APP_URL = 'https://outspot.app';
+
+// Live test (closed beta) links for the store badges.
+const APP_STORE_URL = 'https://testflight.apple.com/join/1ySvnBPQ';
+const PLAY_STORE_URL = 'https://play.google.com/apps/testing/com.outspot.app';
 
 function Waitlist() {
   const [data, setData] = useState({ email: '', phone: '', college: '' });
@@ -265,6 +269,57 @@ function Faq() {
         );
       })}
     </div>
+  );
+}
+
+// Site footer. Privacy Policy + Terms link out to the live pages; every other
+// link shows a transient "coming soon" toast on tap until those pages exist.
+function SiteFooter() {
+  const [toast, setToast] = useState(false);
+  const soon = (e) => {
+    e.preventDefault();
+    setToast(true);
+    setTimeout(() => setToast(false), 2200);
+  };
+  return (
+    <footer className="site-footer">
+      <div className="footer-inner">
+      <div className="footer-grid">
+        <div className="footer-brand">
+          <span className="footer-logo">OutSpot</span>
+          <p className="footer-tag">Spot. Snap. Win.</p>
+        </div>
+
+        <div className="footer-col">
+          <h4>Legal</h4>
+          <a href="https://outspot.app/privacy-policy/" target="_blank" rel="noreferrer">
+            Privacy Policy
+          </a>
+          <a href="https://outspot.app/terms-and-conditions/" target="_blank" rel="noreferrer">
+            Terms of Service
+          </a>
+          <a href="#" onClick={soon}>Community Guidelines</a>
+        </div>
+
+        <div className="footer-col">
+          <h4>Company</h4>
+          <a href="#" onClick={soon}>Contact</a>
+          <a href="#" onClick={soon}>Business Partnerships</a>
+          <a href="#" onClick={soon}>About</a>
+        </div>
+
+        <div className="footer-col">
+          <h4>Follow</h4>
+          <a href="#" onClick={soon}>Instagram</a>
+          <a href="#" onClick={soon}>TikTok</a>
+          <a href="#" onClick={soon}>LinkedIn</a>
+        </div>
+      </div>
+
+      <p className="footer-copy">© 2026 OutSpot. All rights reserved.</p>
+      </div>
+      {toast && <div className="footer-toast">🚧 Coming soon</div>}
+    </footer>
   );
 }
 
@@ -461,7 +516,7 @@ export default function App() {
             </div>
 
             <div className="cta-badges">
-              <a href={APP_URL} className="store-badge" aria-label="Download on the App Store">
+              <a href={APP_STORE_URL} target="_blank" rel="noreferrer" className="store-badge" aria-label="Download on the App Store">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M16.36 1.43c.05 1.02-.36 2.01-1.02 2.73-.69.76-1.84 1.35-2.86 1.27-.07-1 .42-2.04 1.04-2.71.7-.76 1.91-1.32 2.84-1.29zM20.5 17.3c-.5 1.16-.74 1.67-1.39 2.69-.9 1.42-2.18 3.19-3.76 3.2-1.4.02-1.76-.91-3.66-.9-1.9.01-2.29.92-3.69.9-1.58-.01-2.79-1.61-3.69-3.03C1.8 16.06 1.53 11.5 3.06 9.07c.99-1.55 2.55-2.45 4.02-2.45 1.5 0 2.44.92 3.68.92 1.2 0 1.93-.92 3.66-.92 1.31 0 2.7.71 3.69 1.94-3.24 1.77-2.71 6.39.39 8.74z" />
                 </svg>
@@ -471,7 +526,7 @@ export default function App() {
                 </span>
               </a>
 
-              <a href={APP_URL} className="store-badge" aria-label="Get it on Google Play">
+              <a href={PLAY_STORE_URL} target="_blank" rel="noreferrer" className="store-badge" aria-label="Get it on Google Play">
                 <svg viewBox="0 0 24 24">
                   <path d="M3.6 2.3 13 11.7l-9.4 9.4c-.3-.2-.5-.6-.5-1.1V3.4c0-.5.2-.9.5-1.1z" fill="#00c3ff" />
                   <path d="M16.8 8.6 13 11.7 3.6 2.3c.34-.2.74-.2 1.12.02z" fill="#00e676" />
@@ -488,8 +543,8 @@ export default function App() {
         </div>
       </section>
 
-      {/* ---------------- Brand footer ---------------- */}
-      <footer className="brand-footer">
+      {/* ---------------- Brand wordmark band ---------------- */}
+      <section className="brand-footer">
         <div className="bf-mark">
           <img src="/icons/logo.svg" alt="" className="bf-watermark" />
           <h2 className="bf-word">
@@ -497,7 +552,10 @@ export default function App() {
             <span className="bf-spot">Spot</span>
           </h2>
         </div>
-      </footer>
+      </section>
+
+      {/* ---------------- Site footer ---------------- */}
+      <SiteFooter />
     </div>
   );
 }
