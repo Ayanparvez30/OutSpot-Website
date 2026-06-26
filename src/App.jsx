@@ -121,6 +121,101 @@ function Countdown() {
   );
 }
 
+// Waitlist signups are delivered straight to this inbox via FormSubmit.co
+// (no backend needed). NOTE: the FIRST submission triggers a one-time
+// "Activate Form" email to this address — click it once and every later
+// signup lands in the inbox automatically.
+const WAITLIST_EMAIL = 'ayanparvez30@gmail.com';
+
+function Waitlist() {
+  const [data, setData] = useState({ email: '', phone: '', college: '' });
+  const [status, setStatus] = useState('idle'); // idle | sending | done | error
+
+  const set = (k) => (e) => setData((d) => ({ ...d, [k]: e.target.value }));
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${WAITLIST_EMAIL}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          email: data.email,
+          phone: data.phone || '—',
+          'college / city': data.college || '—',
+          _subject: 'New OutSpot waitlist signup 🎉',
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+      if (res.ok) {
+        setStatus('done');
+        setData({ email: '', phone: '', college: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  return (
+    <form className="waitlist-card" onSubmit={submit}>
+      <input
+        className="wl-input"
+        type="email"
+        required
+        placeholder="Email address"
+        value={data.email}
+        onChange={set('email')}
+      />
+      <input
+        className="wl-input"
+        type="tel"
+        placeholder="Phone (optional)"
+        value={data.phone}
+        onChange={set('phone')}
+      />
+      <input
+        className="wl-input"
+        type="text"
+        placeholder="College / city (optional)"
+        value={data.college}
+        onChange={set('college')}
+      />
+      <button className="btn btn-gradient wl-btn" type="submit" disabled={status === 'sending'}>
+        {status === 'sending'
+          ? 'Joining…'
+          : status === 'done'
+          ? 'You’re on the list! 🎉'
+          : 'Join the Waitlist'}
+      </button>
+      {status === 'done' && (
+        <p className="wl-msg wl-ok">Thanks! We’ll be in touch soon.</p>
+      )}
+      {status === 'error' && (
+        <p className="wl-msg wl-err">Something went wrong — please try again.</p>
+      )}
+
+      <div className="wl-socials">
+        <a href="#" className="wl-social" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+            <rect x="3" y="3" width="18" height="18" rx="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+          </svg>
+        </a>
+        <a href="#" className="wl-social" aria-label="More">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z" />
+          </svg>
+        </a>
+      </div>
+    </form>
+  );
+}
+
 // Image that hides itself gracefully if the file is missing, so the layout
 // never breaks before artwork is added.
 function SafeImg({ src, className, alt }) {
@@ -263,6 +358,16 @@ export default function App() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* ---------------- Waitlist ---------------- */}
+      <section className="band">
+        <span className="pill-badge">Be first</span>
+        <h2 className="band-title">Join the first OutSpot explorers</h2>
+        <p className="band-sub">
+          Be among the first to compete, discover spots, and earn rewards.
+        </p>
+        <Waitlist />
       </section>
     </div>
   );
