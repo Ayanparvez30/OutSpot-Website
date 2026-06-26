@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "outspot-dfae2"
+  },
+  "targets": {
+    "outspot-dfae2": {
+      "hosting": {
+        "outspot-website": [
+          "outspot-website"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

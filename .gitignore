@@ -3,3 +3,8 @@ dist
 .vite
 *.local
 .DS_Store
+
+# Firebase
+.firebase
+firebase-debug.log
+.firebase/
