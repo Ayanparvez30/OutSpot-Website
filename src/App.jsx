@@ -196,8 +196,8 @@ function Waitlist() {
         {status === 'sending'
           ? 'Joining…'
           : status === 'done'
-          ? 'You’re on the list! 🎉'
-          : 'Join the Waitlist'}
+          ? 'You’re in! 🎉'
+          : 'Join as tester'}
       </button>
       {status === 'done' && (
         <p className="wl-msg wl-ok">Thanks! We’ll be in touch soon.</p>
@@ -274,12 +274,16 @@ function Faq() {
 
 // Site footer. Privacy Policy + Terms link out to the live pages; every other
 // link shows a transient "coming soon" toast on tap until those pages exist.
-function SiteFooter() {
+function SiteFooter({ go }) {
   const [toast, setToast] = useState(false);
   const soon = (e) => {
     e.preventDefault();
     setToast(true);
     setTimeout(() => setToast(false), 2200);
+  };
+  const nav = (p) => (e) => {
+    e.preventDefault();
+    go(p);
   };
   return (
     <footer className="site-footer">
@@ -298,14 +302,14 @@ function SiteFooter() {
           <a href="https://outspot.app/terms-and-conditions/" target="_blank" rel="noreferrer">
             Terms of Service
           </a>
-          <a href="#" onClick={soon}>Community Guidelines</a>
+          <a href="#" onClick={nav('community')}>Community Guidelines</a>
         </div>
 
         <div className="footer-col">
           <h4>Company</h4>
-          <a href="#" onClick={soon}>Contact</a>
-          <a href="#" onClick={soon}>Business Partnerships</a>
-          <a href="#" onClick={soon}>About</a>
+          <a href="#" onClick={nav('contact')}>Contact</a>
+          <a href="#" onClick={nav('business')}>Business Partnerships</a>
+          <a href="#" onClick={nav('about')}>About</a>
         </div>
 
         <div className="footer-col">
@@ -323,6 +327,142 @@ function SiteFooter() {
   );
 }
 
+/* ------------------------- Content pages ------------------------- */
+
+function About() {
+  return (
+    <section className="page-doc">
+      <span className="pill-badge">About</span>
+      <h1 className="doc-title">About OutSpot</h1>
+      <p>
+        OutSpot is a social discovery app that turns your city into a game. Visit
+        real places, snap photos, complete challenges, earn points, and compete
+        with friends to become the ultimate urban explorer.
+      </p>
+      <h3>How it works</h3>
+      <ul className="doc-list">
+        <li>Discover trending restaurants, bars, cafés, and hidden gems near you.</li>
+        <li>Snap a photo at a spot and share it to your story.</li>
+        <li>Complete daily &amp; weekly challenges to rack up points.</li>
+        <li>Climb the leaderboard and split a $1,000 weekly prize pool.</li>
+      </ul>
+      <h3>Our mission</h3>
+      <p>
+        We want to get people off their feeds and out into the real world —
+        exploring local spots, meeting friends, and getting rewarded for showing
+        up. OutSpot is launching all across the USA on <strong>September 1, 2026</strong>.
+      </p>
+    </section>
+  );
+}
+
+function Business({ go }) {
+  return (
+    <section className="page-doc">
+      <span className="pill-badge">For Businesses</span>
+      <h1 className="doc-title">Business Partnerships</h1>
+      <p>
+        Partner with OutSpot to put your venue in front of thousands of active
+        explorers and turn online attention into real foot traffic.
+      </p>
+      <h3>What you get</h3>
+      <ul className="doc-list">
+        <li><strong>Sponsored challenges</strong> that send users straight to your door.</li>
+        <li><strong>Featured placement</strong> in Explore, Map, and Trending.</li>
+        <li><strong>Real foot traffic</strong> from users competing to check in.</li>
+        <li><strong>Insights</strong> on visits, stories, and engagement at your spot.</li>
+      </ul>
+      <h3>Let&rsquo;s talk</h3>
+      <p>
+        Want to create a sponsored challenge or feature your business? Reach out
+        and our team will get you set up.
+      </p>
+      <button className="btn btn-gradient btn-lg" onClick={() => go('contact')}>
+        Contact our team
+      </button>
+    </section>
+  );
+}
+
+function Community() {
+  return (
+    <section className="page-doc">
+      <span className="pill-badge">Community</span>
+      <h1 className="doc-title">Community Guidelines</h1>
+      <p>
+        OutSpot is built on real exploration and good vibes. To keep it fun and
+        safe for everyone, please follow these guidelines:
+      </p>
+      <ul className="doc-list">
+        <li><strong>Be authentic</strong> — post real photos taken at real places. No fakes or stolen content.</li>
+        <li><strong>Be respectful</strong> — no harassment, hate, or bullying toward other explorers.</li>
+        <li><strong>No spam</strong> — keep posts genuine; don&rsquo;t flood challenges or chats.</li>
+        <li><strong>Respect privacy</strong> — don&rsquo;t share others&rsquo; personal info or photos without consent.</li>
+        <li><strong>Stay safe &amp; legal</strong> — only visit places you&rsquo;re allowed to, and never put yourself at risk for points.</li>
+        <li><strong>Play fair</strong> — no cheating, location spoofing, or gaming the leaderboard.</li>
+      </ul>
+      <p>
+        Breaking these can lead to removed content, lost points, or a banned
+        account. Explore responsibly and have fun!
+      </p>
+    </section>
+  );
+}
+
+function Contact() {
+  const [data, setData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState('idle');
+  const set = (k) => (e) => setData((d) => ({ ...d, [k]: e.target.value }));
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${WAITLIST_EMAIL}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          message: data.message,
+          _subject: 'New OutSpot contact message ✉️',
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+      if (res.ok) {
+        setStatus('done');
+        setData({ name: '', email: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  return (
+    <section className="page-doc">
+      <span className="pill-badge">Contact</span>
+      <h1 className="doc-title">Contact Us</h1>
+      <p>
+        Questions, feedback, or partnership ideas? Send us a message and we&rsquo;ll
+        get back to you.
+      </p>
+      <form className="contact-form" onSubmit={submit}>
+        <input className="wl-input" type="text" required placeholder="Your name" value={data.name} onChange={set('name')} />
+        <input className="wl-input" type="email" required placeholder="Email address" value={data.email} onChange={set('email')} />
+        <textarea className="wl-input contact-textarea" required placeholder="Your message" rows={5} value={data.message} onChange={set('message')} />
+        <button className="btn btn-gradient wl-btn" type="submit" disabled={status === 'sending'}>
+          {status === 'sending' ? 'Sending…' : status === 'done' ? 'Message sent! 🎉' : 'Send message'}
+        </button>
+        {status === 'done' && <p className="wl-msg wl-ok">Thanks! We&rsquo;ll be in touch soon.</p>}
+        {status === 'error' && <p className="wl-msg wl-err">Something went wrong — please try again.</p>}
+      </form>
+    </section>
+  );
+}
+
 // Image that hides itself gracefully if the file is missing, so the layout
 // never breaks before artwork is added.
 function SafeImg({ src, className, alt }) {
@@ -334,11 +474,26 @@ function SafeImg({ src, className, alt }) {
 }
 
 export default function App() {
+  const [page, setPage] = useState('home');
+  const go = (p) => {
+    setPage(p);
+    window.scrollTo(0, 0);
+  };
+  // Nav feature/Download links always target the home page's sections.
+  const navSection = (id) => (e) => {
+    e.preventDefault();
+    setPage('home');
+    setTimeout(
+      () => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }),
+      60
+    );
+  };
+
   return (
     <div className="page">
       {/* ---------------- Navbar ---------------- */}
       <header className="nav">
-        <a className="brand" href="#">
+        <a className="brand" href="#" onClick={(e) => { e.preventDefault(); go('home'); }}>
           <img src="/icons/logo.svg" alt="OutSpot" className="brand-logo" />
           <span className="brand-name">
             <span className="brand-out">Out</span>
@@ -348,19 +503,31 @@ export default function App() {
 
         <nav className="nav-links">
           {NAV.map((item) => (
-            <a key={item.label} className="nav-link" href={`#${item.label.toLowerCase()}`}>
+            <a
+              key={item.label}
+              className="nav-link"
+              href={`#${item.label.toLowerCase()}`}
+              onClick={navSection(item.label.toLowerCase())}
+            >
               <img src={item.icon} alt="" className="nav-icon" />
               <span>{item.label}</span>
             </a>
           ))}
         </nav>
 
-        <a className="btn btn-gradient nav-download" href="#download">
+        <a className="btn btn-gradient nav-download" href="#download" onClick={navSection('download')}>
           Download
           <img src="/icons/download.svg" alt="" className="btn-icon" />
         </a>
       </header>
 
+      {page === 'about' && <About go={go} />}
+      {page === 'business' && <Business go={go} />}
+      {page === 'community' && <Community />}
+      {page === 'contact' && <Contact />}
+
+      {page === 'home' && (
+      <>
       {/* ---------------- Hero ---------------- */}
       <main className="hero">
         <div className="hero-copy">
@@ -553,9 +720,11 @@ export default function App() {
           </h2>
         </div>
       </section>
+      </>
+      )}
 
       {/* ---------------- Site footer ---------------- */}
-      <SiteFooter />
+      <SiteFooter go={go} />
     </div>
   );
 }

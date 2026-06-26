@@ -801,6 +801,73 @@ section[id] {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
+/* ---------------- Content pages (About / Business / Community / Contact) -------- */
+.page-doc {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(56px, 8vw, 96px) clamp(20px, 5vw, 40px) clamp(70px, 10vw, 120px);
+}
+.doc-title {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 12px 0 22px;
+}
+.page-doc p {
+  color: var(--muted);
+  font-size: 1.12rem;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+.page-doc p strong {
+  color: #fff;
+}
+.page-doc h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 30px 0 14px;
+}
+.doc-list {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+}
+.doc-list li {
+  position: relative;
+  padding-left: 26px;
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+.doc-list li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(120deg, var(--pink), var(--purple));
+}
+.doc-list li strong {
+  color: #fff;
+}
+.page-doc .btn-lg {
+  margin-top: 10px;
+}
+.contact-form {
+  margin-top: 26px;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.contact-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
 /* ---------------- Responsive ---------------- */
 @media (max-width: 900px) {
   .nav-links {
