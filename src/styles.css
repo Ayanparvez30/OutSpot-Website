@@ -19,7 +19,7 @@ html,
 body {
   background: var(--bg-deep);
   color: var(--text);
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, Roboto,
+  font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto,
     sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -52,18 +52,18 @@ body {
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-decoration: none;
   color: var(--text);
 }
 .brand-logo {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   object-fit: cover;
 }
 .brand-name {
-  font-size: 1.55rem;
+  font-size: 1.85rem;
   font-weight: 800;
   letter-spacing: 0.3px;
 }
@@ -152,8 +152,8 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(3rem, 7vw, 6rem);
-  line-height: 1.02;
+  font-size: clamp(2.7rem, 6vw, 5rem);
+  line-height: 1.03;
   font-weight: 800;
   letter-spacing: -1.5px;
 }
@@ -172,36 +172,77 @@ body {
 
 /* ---------------- Hero artwork ---------------- */
 .hero-visual {
-  position: relative;
-  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.art {
-  position: absolute;
-  display: block;
+.hero-art {
+  width: 100%;
+  max-width: 560px;
+  filter: drop-shadow(0 30px 70px rgba(0, 0, 0, 0.5));
 }
-.art-phone-back {
-  width: 56%;
-  top: 4%;
-  right: 16%;
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
+
+/* ---------------- Feature sections ---------------- */
+.features {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 50px) clamp(20px, 5vw, 64px)
+    clamp(60px, 9vw, 120px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(60px, 9vw, 130px);
 }
-.art-phone-front {
-  width: 50%;
-  bottom: 4%;
-  right: 0;
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55));
+.feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(32px, 5vw, 80px);
 }
-.art-char-left {
-  width: 26%;
-  bottom: 0;
-  left: 2%;
-  z-index: 3;
+/* odd rows: image on the right, text on the left */
+.feature-reverse .feature-visual {
+  order: 2;
 }
-.art-char-right {
-  width: 24%;
-  top: 6%;
-  right: 4%;
-  z-index: 3;
+.feature-visual {
+  display: flex;
+  justify-content: center;
+}
+.feature-img {
+  width: 100%;
+  max-width: 560px;
+  filter: drop-shadow(0 30px 70px rgba(0, 0, 0, 0.5));
+}
+.feature-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #c084fc;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 18px;
+}
+.feature-eyebrow-icon {
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(120deg, var(--pink), var(--purple));
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+.feature-title {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.feature-desc {
+  margin-top: 22px;
+  max-width: 520px;
+  color: var(--muted);
+  font-size: 1.12rem;
+  line-height: 1.62;
 }
 
 /* ---------------- Responsive ---------------- */
@@ -218,6 +259,22 @@ body {
     margin-right: auto;
   }
   .hero-visual {
-    min-height: 420px;
+    order: -1;
+  }
+  /* Stack each feature: image on top, text below (always). */
+  .feature,
+  .feature-reverse {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .feature-reverse .feature-visual {
+    order: -1;
+  }
+  .feature-eyebrow {
+    justify-content: center;
+  }
+  .feature-desc {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
