@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Top-nav items use the app's own tab icons (copied into /public/icons).
 const NAV = [
@@ -60,6 +60,66 @@ const FEATURES = [
     image: PLACEHOLDER,
   },
 ];
+
+const LEADERBOARD = [
+  { rank: 1, name: 'Alex', pts: '2,480' },
+  { rank: 2, name: 'Sam', pts: '2,105' },
+  { rank: 3, name: 'Jordan', pts: '1,890' },
+  { rank: 4, name: 'You', pts: '1,720' },
+];
+
+// Left column then right column, filling the 2-col grid row by row.
+const LAUNCH_FEATURES = [
+  'Nationwide challenges',
+  'College-friendly experiences',
+  'Local food spots everywhere',
+  'Friend group competitions',
+  'Weekend missions',
+  'Hidden gems & viewpoints',
+];
+
+// Real launch target — the countdown below ticks down to this every second.
+const LAUNCH_DATE = new Date('2026-09-01T00:00:00');
+
+// Small location-pin used in the launch feature pills (purple, self-contained).
+function PinIcon() {
+  return (
+    <svg className="launch-pin" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"
+      />
+    </svg>
+  );
+}
+
+// Live countdown to LAUNCH_DATE — re-renders every second.
+function Countdown() {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const diff = Math.max(0, LAUNCH_DATE.getTime() - now);
+  const units = [
+    { v: Math.floor(diff / 86400000), l: 'Days' },
+    { v: Math.floor((diff / 3600000) % 24), l: 'Hours' },
+    { v: Math.floor((diff / 60000) % 60), l: 'Minutes' },
+    { v: Math.floor((diff / 1000) % 60), l: 'Seconds' },
+  ];
+
+  return (
+    <div className="countdown">
+      {units.map((u) => (
+        <div className="cd-box" key={u.l}>
+          <div className="cd-num">{String(u.v).padStart(2, '0')}</div>
+          <div className="cd-label">{u.l}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 // Image that hides itself gracefully if the file is missing, so the layout
 // never breaks before artwork is added.
@@ -153,6 +213,57 @@ export default function App() {
           </section>
         ))}
       </div>
+
+      {/* ---------------- Weekly prize pool ---------------- */}
+      <section className="band">
+        <span className="pill-badge">Win Big</span>
+        <h2 className="band-title">$1,000 Weekly Prize Pool</h2>
+        <div className="prize-card">
+          <div className="prize-icon">$</div>
+          <p className="prize-text">
+            Every week, the highest scorers on the leaderboard split a cash
+            prize pool of <strong>$1,000</strong>. Rack up points, top the
+            charts, and get paid to explore.
+          </p>
+          <p className="prize-note">
+            Prizes distributed every Sunday at midnight ET.
+          </p>
+        </div>
+      </section>
+
+      {/* ---------------- Leaderboard ---------------- */}
+      <section className="band">
+        <span className="pill-badge">Compete</span>
+        <h2 className="band-title">Out-snap your friends</h2>
+        <div className="lb-card">
+          {LEADERBOARD.map((r) => (
+            <div className="lb-row" key={r.rank}>
+              <span className={`lb-rank lb-rank-${r.rank}`}>{r.rank}</span>
+              <span className="lb-name">{r.name}</span>
+              <span className="lb-pts">{r.pts} pts</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ---------------- Launch countdown ---------------- */}
+      <section className="band">
+        <span className="pill-badge">Coming soon</span>
+        <h2 className="band-title">Launching September 1, 2026</h2>
+        <p className="band-sub">
+          OutSpot is launching all across the USA — local food, coffee, parks,
+          murals, sunset spots, college areas, and hidden gems in every city.
+        </p>
+        <Countdown />
+        <div className="launch-grid">
+          {LAUNCH_FEATURES.map((f) => (
+            <div className="launch-pill" key={f}>
+              <PinIcon />
+              {f}
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
