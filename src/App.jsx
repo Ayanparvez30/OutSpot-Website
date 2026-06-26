@@ -127,6 +127,10 @@ function Countdown() {
 // signup lands in the inbox automatically.
 const WAITLIST_EMAIL = 'ayanparvez30@gmail.com';
 
+// Placeholder link the QR encodes / the store badges point to. Swap for the
+// real App Store + Google Play URLs (and a deep link in the QR) once live.
+const APP_URL = 'https://outspot.app';
+
 function Waitlist() {
   const [data, setData] = useState({ email: '', phone: '', college: '' });
   const [status, setStatus] = useState('idle'); // idle | sending | done | error
@@ -216,6 +220,54 @@ function Waitlist() {
   );
 }
 
+const FAQS = [
+  {
+    q: 'What is OutSpot?',
+    a: 'OutSpot is a social discovery app where users visit places, complete challenges, snap photos, earn points, and compete.',
+  },
+  { q: 'Is OutSpot free?', a: 'Yes, the app is free to download.' },
+  { q: 'Where is OutSpot launching?', a: 'OutSpot is launching all across the USA.' },
+  {
+    q: 'How do I earn points?',
+    a: 'You earn points by visiting places, completing challenges, and submitting approved photos.',
+  },
+  {
+    q: 'Can I play with friends?',
+    a: 'Yes, OutSpot is designed for friend challenges and leaderboards.',
+  },
+  {
+    q: 'Can businesses join OutSpot?',
+    a: 'Yes, local businesses can partner with OutSpot to create sponsored challenges and drive foot traffic.',
+  },
+];
+
+// FAQ accordion — one item open at a time (first open by default).
+function Faq() {
+  const [open, setOpen] = useState(0);
+  return (
+    <div className="faq-list">
+      {FAQS.map((item, i) => {
+        const isOpen = open === i;
+        return (
+          <div className={`faq-item ${isOpen ? 'open' : ''}`} key={item.q}>
+            <button
+              className="faq-q"
+              onClick={() => setOpen(isOpen ? -1 : i)}
+              aria-expanded={isOpen}
+            >
+              <span>{item.q}</span>
+              <svg className="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            {isOpen && <p className="faq-a">{item.a}</p>}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // Image that hides itself gracefully if the file is missing, so the layout
 // never breaks before artwork is added.
 function SafeImg({ src, className, alt }) {
@@ -267,7 +319,7 @@ export default function App() {
             aren&rsquo;t.
           </p>
 
-          <a className="btn btn-gradient btn-lg" id="download" href="#">
+          <a className="btn btn-gradient btn-lg" href="#download">
             Download Free
             <img src="/icons/download.svg" alt="" className="btn-icon" />
           </a>
@@ -369,6 +421,82 @@ export default function App() {
         </p>
         <Waitlist />
       </section>
+
+      {/* ---------------- FAQ ---------------- */}
+      <section className="band">
+        <span className="pill-badge">FAQ</span>
+        <h2 className="band-title">Frequently Asked Questions</h2>
+        <Faq />
+      </section>
+
+      {/* ---------------- Final CTA ---------------- */}
+      <section className="cta-band" id="download">
+        <div className="cta-inner">
+          <h2 className="cta-title">Ready to rule your city?</h2>
+          <p className="band-sub">
+            Download the app to join thousands of explorers competing for glory,
+            prizes, and bragging rights. Your urban adventure starts now.
+          </p>
+
+          <div className="cta-row">
+            <div className="cta-qr-wrap">
+              <div className="cta-qr-frame">
+                <div className="cta-qr">
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&data=${encodeURIComponent(
+                      APP_URL
+                    )}`}
+                    alt="Scan to download OutSpot"
+                  />
+                </div>
+              </div>
+              <span className="cta-qr-label">Scan to download</span>
+            </div>
+
+            <div className="cta-or">
+              <span className="cta-or-line" />
+              <span>or</span>
+              <span className="cta-or-line" />
+            </div>
+
+            <div className="cta-badges">
+              <a href={APP_URL} className="store-badge" aria-label="Download on the App Store">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16.36 1.43c.05 1.02-.36 2.01-1.02 2.73-.69.76-1.84 1.35-2.86 1.27-.07-1 .42-2.04 1.04-2.71.7-.76 1.91-1.32 2.84-1.29zM20.5 17.3c-.5 1.16-.74 1.67-1.39 2.69-.9 1.42-2.18 3.19-3.76 3.2-1.4.02-1.76-.91-3.66-.9-1.9.01-2.29.92-3.69.9-1.58-.01-2.79-1.61-3.69-3.03C1.8 16.06 1.53 11.5 3.06 9.07c.99-1.55 2.55-2.45 4.02-2.45 1.5 0 2.44.92 3.68.92 1.2 0 1.93-.92 3.66-.92 1.31 0 2.7.71 3.69 1.94-3.24 1.77-2.71 6.39.39 8.74z" />
+                </svg>
+                <span className="sb-text">
+                  <span className="sb-small">Download on the</span>
+                  <span className="sb-big">App Store</span>
+                </span>
+              </a>
+
+              <a href={APP_URL} className="store-badge" aria-label="Get it on Google Play">
+                <svg viewBox="0 0 24 24">
+                  <path d="M3.6 2.3 13 11.7l-9.4 9.4c-.3-.2-.5-.6-.5-1.1V3.4c0-.5.2-.9.5-1.1z" fill="#00c3ff" />
+                  <path d="M16.8 8.6 13 11.7 3.6 2.3c.34-.2.74-.2 1.12.02z" fill="#00e676" />
+                  <path d="M16.8 14.8 4.72 21.68c-.38.22-.78.22-1.12.02L13 11.7z" fill="#ff3d47" />
+                  <path d="M20.4 10.55c.9.5.9 1.85 0 2.35l-3.6 2.05-3.8-3.25 3.8-3.2z" fill="#ffce00" />
+                </svg>
+                <span className="sb-text">
+                  <span className="sb-small">GET IT ON</span>
+                  <span className="sb-big">Google Play</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- Brand footer ---------------- */}
+      <footer className="brand-footer">
+        <div className="bf-mark">
+          <img src="/icons/logo.svg" alt="" className="bf-watermark" />
+          <h2 className="bf-word">
+            <span className="bf-out">Out</span>
+            <span className="bf-spot">Spot</span>
+          </h2>
+        </div>
+      </footer>
     </div>
   );
 }
