@@ -286,7 +286,8 @@ export default function App() {
         <a className="brand" href="#">
           <img src="/icons/logo.svg" alt="OutSpot" className="brand-logo" />
           <span className="brand-name">
-            Out<span className="brand-accent">Spot</span>
+            <span className="brand-out">Out</span>
+            <span className="brand-accent">Spot</span>
           </span>
         </a>
 

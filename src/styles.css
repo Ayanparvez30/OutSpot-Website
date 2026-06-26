@@ -74,11 +74,21 @@ section[id] {
 }
 .brand-name {
   font-size: 1.85rem;
-  font-weight: 800;
   letter-spacing: 0.3px;
+  line-height: 1;
+}
+/* "Out" thin + purple gradient, "Spot" bold + pink→coral gradient (matches
+   the footer wordmark). */
+.brand-out {
+  font-weight: 400;
+  background: linear-gradient(180deg, #bb8dff, #9333ea);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .brand-accent {
-  background: linear-gradient(120deg, var(--pink), var(--purple));
+  font-weight: 800;
+  background: linear-gradient(95deg, #ec4faf 0%, #fb7185 58%, #fb8c5a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
