@@ -22,16 +22,18 @@ body {
   font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto,
     sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 .page {
   min-height: 100vh;
-  /* Purple glow behind the phones, fading into a near-black base. */
+  /* A dark purple gradient that runs the WHOLE page (so the lower sections
+     aren't flat black), plus a stronger purple glow behind the hero phones
+     and a faint pink — matching the app's dark-purple theme. */
   background:
-    radial-gradient(circle at 76% 26%, rgba(123, 81, 243, 0.5), transparent 52%),
-    radial-gradient(circle at 12% 8%, rgba(236, 72, 153, 0.16), transparent 40%),
-    linear-gradient(165deg, var(--bg-top) 0%, var(--bg-deep) 58%);
-  overflow-x: hidden;
+    radial-gradient(ellipse 58% 40% at 80% 13%, rgba(150, 95, 246, 0.42), transparent 60%),
+    radial-gradient(ellipse 48% 34% at 12% 6%, rgba(236, 72, 153, 0.1), transparent 56%),
+    linear-gradient(180deg, #170c2b 0%, #100620 50%, #160a2a 100%);
 }
 
 /* ---------------- Navbar ---------------- */
@@ -197,8 +199,24 @@ body {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: clamp(32px, 5vw, 80px);
+  /* Contained purple→pink glow behind the image side (left by default).
+     A background (not an absolute element) so it never affects scroll. */
+  background: radial-gradient(
+    ellipse 48% 75% at 26% 50%,
+    rgba(150, 95, 246, 0.22) 0%,
+    rgba(236, 72, 153, 0.08) 45%,
+    transparent 64%
+  );
 }
-/* odd rows: image on the right, text on the left */
+/* odd rows: image on the right → glow + image move to the right */
+.feature-reverse {
+  background: radial-gradient(
+    ellipse 48% 75% at 74% 50%,
+    rgba(150, 95, 246, 0.22) 0%,
+    rgba(236, 72, 153, 0.08) 45%,
+    transparent 64%
+  );
+}
 .feature-reverse .feature-visual {
   order: 2;
 }
