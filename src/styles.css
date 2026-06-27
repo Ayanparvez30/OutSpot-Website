@@ -35,13 +35,26 @@ section[id] {
 
 .page {
   min-height: 100vh;
-  /* A dark purple gradient that runs the WHOLE page (so the lower sections
-     aren't flat black), plus a stronger purple glow behind the hero phones
-     and a faint pink — matching the app's dark-purple theme. */
+  /* Matches the app: a bright purple (#7E1CCD) glow in the TOP-RIGHT corner
+     fading diagonally through #3F0A5E → #270332 to a uniform dark base
+     (#1C001F) across the whole rest of the page. */
   background:
-    radial-gradient(ellipse 58% 40% at 80% 13%, rgba(150, 95, 246, 0.42), transparent 60%),
-    radial-gradient(ellipse 48% 34% at 12% 6%, rgba(236, 72, 153, 0.1), transparent 56%),
-    linear-gradient(180deg, #170c2b 0%, #100620 50%, #160a2a 100%);
+    /* bright purple, upper-right — the main light source */
+    radial-gradient(
+      1500px 900px at 96% -6%,
+      #7e1ccd 0%,
+      #4a1078 20%,
+      #29063b 42%,
+      rgba(28, 0, 31, 0) 64%
+    ),
+    /* softer purple halo down the right, behind the phones */
+    radial-gradient(
+      1150px 1050px at 88% 380px,
+      #3f0a5e 0%,
+      rgba(63, 10, 94, 0) 62%
+    ),
+    /* uniform dark everywhere else */
+    #1c001f;
 }
 
 /* ---------------- Navbar ---------------- */
