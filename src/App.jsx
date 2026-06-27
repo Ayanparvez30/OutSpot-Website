@@ -12,7 +12,10 @@ const NAV = [
 // Feature sections (alternating image / text), text taken from the design.
 // `image` is a per-section placeholder for now — swap each with the client's
 // Lottie / artwork when it arrives. PLACEHOLDER below is the single temp image.
-const PLACEHOLDER = '/images/testimages.png';
+// One image for the hero only. Each feature section uses its own
+// /images/<key>-image.png (explore/map/camera/challenges/chat); add those
+// files to public/images and they appear automatically.
+const HERO_IMG = '/images/hero-image.png';
 const FEATURES = [
   {
     key: 'explore',
@@ -21,7 +24,6 @@ const FEATURES = [
     title: "Explore the places everyone's talking about",
     desc:
       'Discover trending restaurants, bars, cafés, and hidden gems across your city. See where your friends are going through their stories and find your next favorite spot before everyone else does.',
-    image: PLACEHOLDER,
   },
   {
     key: 'map',
@@ -30,7 +32,6 @@ const FEATURES = [
     title: "Spot what's trending around you",
     desc:
       "Explore your city through an interactive map that shows trending spots nearby and the places your friends are visiting right now. Find where the energy is, see what's happening around you, and decide where to go next.",
-    image: PLACEHOLDER,
   },
   {
     key: 'camera',
@@ -39,7 +40,6 @@ const FEATURES = [
     title: 'Get spotted where it matters',
     desc:
       "Snap the moment, share it to your story, and be spotted at the places everyone wants to be. From trending hotspots to hidden gems, let your friends see you in the city's most happening spots.",
-    image: PLACEHOLDER,
   },
   {
     key: 'challenges',
@@ -48,7 +48,6 @@ const FEATURES = [
     title: 'Climb the leaderboard',
     desc:
       'Post stories from the city’s go-to spots, complete daily challenges, and earn points every time you show up. Compete with friends and other Outspot members as you rise through the leaderboard and prove you know where to be.',
-    image: PLACEHOLDER,
   },
   {
     key: 'chat',
@@ -57,9 +56,12 @@ const FEATURES = [
     title: 'Chat about the spots worth knowing',
     desc:
       "Chat with friends about the places they’re into, the spots they keep going back to, and where everyone should show up next. Turn every conversation into your next move.",
-    image: PLACEHOLDER,
   },
 ];
+
+// These sections show a looping video (/images/<key>-video.mp4) instead of the
+// static image; Chat has no video so it stays an image.
+const VIDEO_SECTIONS = new Set(['explore', 'map', 'camera', 'challenges']);
 
 const LEADERBOARD = [
   { rank: 1, name: 'Alex', pts: '2,480' },
@@ -551,7 +553,7 @@ export default function App() {
         </div>
 
         <div className="hero-visual">
-          <SafeImg src={PLACEHOLDER} alt="OutSpot app" className="hero-art" />
+          <SafeImg src={HERO_IMG} alt="OutSpot app" className="hero-art" />
         </div>
       </main>
 
@@ -564,7 +566,19 @@ export default function App() {
             className={`feature ${i % 2 === 1 ? 'feature-reverse' : ''}`}
           >
             <div className="feature-visual">
-              <SafeImg src={f.image} alt={`${f.label} preview`} className="feature-img" />
+              {VIDEO_SECTIONS.has(f.key) ? (
+                <video
+                  className="feature-video"
+                  src={`/images/${f.key}-video.mp4`}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+              ) : (
+                <SafeImg src={`/images/${f.key}-image.png`} alt={`${f.label} preview`} className="feature-img" />
+              )}
             </div>
             <div className="feature-copy">
               <div className="feature-eyebrow">
