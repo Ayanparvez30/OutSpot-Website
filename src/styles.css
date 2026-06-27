@@ -218,24 +218,10 @@ section[id] {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: clamp(32px, 5vw, 80px);
-  /* Contained purple→pink glow behind the image side (left by default).
-     A background (not an absolute element) so it never affects scroll. */
-  background: radial-gradient(
-    ellipse 48% 75% at 26% 50%,
-    rgba(150, 95, 246, 0.22) 0%,
-    rgba(236, 72, 153, 0.08) 45%,
-    transparent 64%
-  );
+  /* No per-feature glow — it read badly behind the wide backdrop image. The
+     page's own background gradient already gives these sections depth. */
 }
-/* odd rows: image on the right → glow + image move to the right */
-.feature-reverse {
-  background: radial-gradient(
-    ellipse 48% 75% at 74% 50%,
-    rgba(150, 95, 246, 0.22) 0%,
-    rgba(236, 72, 153, 0.08) 45%,
-    transparent 64%
-  );
-}
+/* odd rows: image on the right */
 .feature-reverse .feature-visual {
   order: 2;
 }
@@ -270,23 +256,24 @@ section[id] {
   z-index: 0;
   pointer-events: none;
 }
-/* The phone frame: a purple→pink gradient bezel wrapping the video. The
-   gradient is the wrapper's background; the padding is the bezel thickness. */
+/* The phone frame: a slim magenta→purple gradient bezel wrapping the video.
+   Colours + thickness match the frame baked into the chat / backdrop images
+   (magenta to purple, NO coral, thin bezel) so every phone reads the same. */
 .feature-frame {
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 8px;
-  border-radius: 48px;
-  background: linear-gradient(150deg, #a855f7 0%, #ec4899 52%, #fb7185 100%);
+  padding: 6px;
+  border-radius: 46px;
+  background: linear-gradient(150deg, #e259f0 0%, #c43cdb 50%, #9333ea 100%);
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(168, 85, 247, 0.25);
+    0 0 30px rgba(217, 70, 239, 0.22);
 }
 .feature-video {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 38px; /* a touch tighter than the frame's 48px */
+  border-radius: 40px; /* concentric with the frame (46px − 6px bezel) */
 }
 /* Explore + Challenges read a touch larger (video + image scale together);
    Map & Camera keep the default size. */
