@@ -127,7 +127,7 @@ function Countdown() {
 // (no backend needed). NOTE: the FIRST submission triggers a one-time
 // "Activate Form" email to this address — click it once and every later
 // signup lands in the inbox automatically.
-const WAITLIST_EMAIL = 'ayanparvez30@gmail.com';
+const WAITLIST_EMAIL = 'avin@outspot.app';
 
 // Placeholder link the QR encodes. Swap for a real download/landing link once
 // live (a QR can only encode one URL).
@@ -199,7 +199,7 @@ function Waitlist() {
           ? 'Joining…'
           : status === 'done'
           ? 'You’re in! 🎉'
-          : 'Join as tester'}
+          : 'Join as a tester'}
       </button>
       {status === 'done' && (
         <p className="wl-msg wl-ok">Thanks! We’ll be in touch soon.</p>
