@@ -42,9 +42,9 @@ section[id] {
     /* bright purple, upper-right — the main light source */
     radial-gradient(
       1500px 900px at 96% -6%,
-      #7e1ccd 0%,
-      #4a1078 20%,
-      #29063b 42%,
+      #6615a4 0%,
+      #441073 22%,
+      #29063b 44%,
       rgba(28, 0, 31, 0) 64%
     ),
     /* softer purple halo down the right, behind the phones */
