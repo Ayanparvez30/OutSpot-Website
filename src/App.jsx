@@ -573,15 +573,17 @@ export default function App() {
                     alt={`${f.label} preview`}
                     className="feature-img"
                   />
-                  <video
-                    className="feature-video"
-                    src={`/images/${f.key}-video.mp4`}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
-                  />
+                  <div className="feature-frame">
+                    <video
+                      className="feature-video"
+                      src={`/images/${f.key}-video.mp4`}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                    />
+                  </div>
                 </div>
               ) : (
                 <SafeImg src={`/images/${f.key}-image.png`} alt={`${f.label} preview`} className="feature-img" />

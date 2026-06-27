@@ -268,13 +268,23 @@ section[id] {
   z-index: 0;
   pointer-events: none;
 }
-.feature-video {
+/* The phone frame: a purple→pink gradient bezel wrapping the video. The
+   gradient is the wrapper's background; the padding is the bezel thickness. */
+.feature-frame {
   position: relative;
   z-index: 1;
+  width: 100%;
+  padding: 8px;
+  border-radius: 48px;
+  background: linear-gradient(150deg, #a855f7 0%, #ec4899 52%, #fb7185 100%);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(168, 85, 247, 0.25);
+}
+.feature-video {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 18px;
+  border-radius: 38px; /* a touch tighter than the frame's 48px */
 }
 /* Explore + Challenges read a touch larger (video + image scale together);
    Map & Camera keep the default size. */
