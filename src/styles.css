@@ -292,6 +292,12 @@ section[id] {
 #challenges .feature-stack {
   max-width: 350px;
 }
+/* …and ONLY these two get a slightly wider back image so their side cards
+   peek out more. Map & Camera keep the default 155%. */
+#explore .feature-stack .feature-img,
+#challenges .feature-stack .feature-img {
+  width: 192%;
+}
 .feature-eyebrow {
   display: inline-flex;
   align-items: center;
