@@ -226,8 +226,35 @@ section[id] {
   order: 2;
 }
 .feature-visual {
+  position: relative;
   display: flex;
   justify-content: center;
+}
+/* Coral (#EE7581) shade behind the phone, running DIAGONALLY from the
+   top-left corner down to the bottom-right (transparent through the middle).
+   Extends past the artwork (inset: -8%) so it stays visible around it. */
+.feature-visual::before {
+  content: '';
+  position: absolute;
+  inset: -3%;
+  background: linear-gradient(
+    135deg,
+    rgba(238, 117, 129, 0.55) 0%,
+    rgba(238, 117, 129, 0.2) 14%,
+    transparent 30%,
+    transparent 40%,
+    rgba(238, 117, 129, 0.2) 90%,
+    rgba(238, 117, 129, 0.55) 100%
+  );
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+}
+/* Keep the phone artwork above the shade. */
+.feature-visual > .feature-stack,
+.feature-visual > .feature-img {
+  position: relative;
+  z-index: 1;
 }
 .feature-img {
   width: 100%;
