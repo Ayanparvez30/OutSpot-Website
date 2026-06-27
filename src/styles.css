@@ -961,4 +961,27 @@ section[id] {
     grid-template-columns: 1fr 1fr;
     gap: 28px;
   }
+  /* Stack QR → or → badges vertically. Otherwise the badges wrap to their own
+     line while the "or" divider strands awkwardly beside the QR. */
+  .cta-row {
+    flex-direction: column;
+  }
+}
+
+/* ---- Phones (< 600px): clean single-phone view ----
+   The wide backdrop image (155–192% of the stack) overflows a narrow screen,
+   so its side cards get clipped. Below 600px we drop the backdrop entirely and
+   show just the gradient-framed video, centered and fully visible. Desktop is
+   untouched. */
+@media (max-width: 600px) {
+  .feature-stack .feature-img {
+    display: none;
+  }
+  /* No backdrop to leave room for → let the framed video use a little more
+     width so it reads nicely on a phone. */
+  .feature-stack,
+  #explore .feature-stack,
+  #challenges .feature-stack {
+    max-width: 340px;
+  }
 }
