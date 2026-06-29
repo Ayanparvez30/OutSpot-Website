@@ -1,0 +1,12 @@
+{
+  "name": "OutSpot",
+  "short_name": "OutSpot",
+  "description": "Discover your city's best restaurants, bars and cafés. Complete challenges, earn points, and outspot your friends.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1c001f",
+  "theme_color": "#1c001f",
+  "icons": [
+    { "src": "/icons/logo.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

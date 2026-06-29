@@ -2,13 +2,90 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/icons/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OutSpot — Spot and be spotted</title>
+
+    <!-- ===================== SEO ===================== -->
+    <!-- NOTE: when you point a custom domain (e.g. https://outspot.app),
+         replace every "https://outspot-website.web.app" below with it, and
+         rebuild + redeploy. It's the canonical / Open-Graph base URL. -->
+    <title>OutSpot — Discover the Best Restaurants, Bars &amp; Cafés in Your City</title>
     <meta
       name="description"
-      content="Discover your city's best restaurants, bars, and cafés. Outspot rivals, rack up points, level up. Be everywhere they aren't."
+      content="OutSpot is a social discovery app — explore your city's best restaurants, bars &amp; cafés, complete challenges, snap photos, earn points, and climb the leaderboard with friends. Free on iOS &amp; Android."
     />
+    <meta
+      name="keywords"
+      content="OutSpot, city discovery app, restaurants near me, best bars, cafés, social app, check in, earn points, challenges, leaderboard, explore city, things to do near me"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="OutSpot" />
+    <meta name="theme-color" content="#1c001f" />
+    <link rel="canonical" href="https://outspot-website.web.app/" />
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn, …) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="OutSpot" />
+    <meta property="og:title" content="OutSpot — Spot &amp; Be Spotted" />
+    <meta
+      property="og:description"
+      content="Explore your city's best restaurants, bars &amp; cafés. Complete challenges, earn points, and outspot your friends. Free on iOS &amp; Android."
+    />
+    <meta property="og:url" content="https://outspot-website.web.app/" />
+    <meta property="og:image" content="https://outspot-website.web.app/images/hero-image.png" />
+    <meta property="og:image:alt" content="OutSpot app preview" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="OutSpot — Spot &amp; Be Spotted" />
+    <meta
+      name="twitter:description"
+      content="Explore your city's best restaurants, bars &amp; cafés. Complete challenges, earn points, and outspot your friends."
+    />
+    <meta name="twitter:image" content="https://outspot-website.web.app/images/hero-image.png" />
+
+    <link rel="icon" type="image/svg+xml" href="/icons/logo.svg" />
+    <link rel="apple-touch-icon" href="/icons/logo.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Structured data: Organization + Website + App + FAQ (rich results) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "OutSpot",
+            "url": "https://outspot-website.web.app/",
+            "logo": "https://outspot-website.web.app/icons/logo.svg"
+          },
+          {
+            "@type": "WebSite",
+            "name": "OutSpot",
+            "url": "https://outspot-website.web.app/"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "OutSpot",
+            "operatingSystem": "iOS, Android",
+            "applicationCategory": "LifestyleApplication",
+            "description": "A social discovery app to explore your city's best restaurants, bars and cafés, complete challenges, earn points, and compete with friends.",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "What is OutSpot?", "acceptedAnswer": { "@type": "Answer", "text": "OutSpot is a social discovery app where users visit places, complete challenges, snap photos, earn points, and compete." } },
+              { "@type": "Question", "name": "Is OutSpot free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, the app is free to download." } },
+              { "@type": "Question", "name": "Where is OutSpot launching?", "acceptedAnswer": { "@type": "Answer", "text": "OutSpot is launching all across the USA." } },
+              { "@type": "Question", "name": "How do I earn points?", "acceptedAnswer": { "@type": "Answer", "text": "You earn points by visiting places, completing challenges, and submitting approved photos." } },
+              { "@type": "Question", "name": "Can I play with friends?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, OutSpot is designed for friend challenges and leaderboards." } },
+              { "@type": "Question", "name": "Can businesses join OutSpot?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, local businesses can partner with OutSpot to create sponsored challenges and drive foot traffic." } }
+            ]
+          }
+        ]
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,6 +95,25 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Fallback content for crawlers / scrapers that don't run JavaScript.
+         Googlebot renders the full React app; this guarantees the others
+         still see the core copy. -->
+    <noscript>
+      <h1>OutSpot — Spot and be spotted</h1>
+      <p>
+        Discover your city's best restaurants, bars, and cafés. Outspot rivals,
+        rack up points, level up. Complete challenges, snap photos, earn points,
+        and climb the leaderboard with friends. OutSpot is free on iOS and
+        Android, launching across the USA.
+      </p>
+      <ul>
+        <li>Explore trending restaurants, bars, cafés and hidden gems.</li>
+        <li>Complete daily and weekly challenges to earn points.</li>
+        <li>Compete with friends and rise up the leaderboard.</li>
+      </ul>
+    </noscript>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
