@@ -155,7 +155,16 @@ section[id] {
   height: 20px;
 }
 .btn-gradient {
-  background: linear-gradient(100deg, #ff5b9e 0%, #c14ff0 55%, #9b6bff 100%);
+  /* Purple → magenta → coral, left-to-right (shared by every button on the
+     site: Download, Download Free, Join as a tester, Send message, etc.). */
+  background: linear-gradient(
+    90deg,
+    #b053ec 0%,
+    #bf5bd5 25%,
+    #cf64b8 50%,
+    #e37097 75%,
+    #f77b74 100%
+  );
   box-shadow: 0 12px 30px rgba(193, 79, 240, 0.4);
   transition: filter 0.18s ease, transform 0.18s ease;
 }
