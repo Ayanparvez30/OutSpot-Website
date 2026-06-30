@@ -982,10 +982,12 @@ section[id] {
     font-size: 0.92rem;
   }
 
-  /* Hero — tighter width + padding, smaller title/sub + artwork */
+  /* Hero — tighter width + padding, smaller title/sub + artwork. The reduced
+     vertical padding + smaller artwork together shrink the top (navbar→title)
+     and bottom (copy→next section) gaps. */
   .hero {
     max-width: 1240px;
-    padding: clamp(32px, 5vw, 64px) clamp(20px, 4vw, 48px);
+    padding: clamp(20px, 2.6vw, 36px) clamp(20px, 4vw, 48px);
     gap: 18px;
   }
   .hero-title {
@@ -996,13 +998,13 @@ section[id] {
     font-size: 1.05rem;
   }
   .hero-art {
-    max-width: 760px;
+    max-width: 660px;
   }
 
   /* Feature sections */
   .features {
     max-width: 1240px;
-    padding: clamp(16px, 3vw, 40px) clamp(20px, 4vw, 48px)
+    padding: clamp(8px, 1.6vw, 20px) clamp(20px, 4vw, 48px)
       clamp(48px, 7vw, 96px);
     gap: clamp(48px, 7vw, 100px);
   }
