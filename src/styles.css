@@ -462,36 +462,63 @@ section[id] {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
-.lb-rank {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: #fff;
+/* Gold / silver / bronze prize pill (medal + cash amount). Pushed to the right
+   so prize + points sit together on the right edge of the row. */
+.lb-prize {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 16px 5px 7px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+.lb-medal {
+  width: 22px;
+  height: auto;
   flex-shrink: 0;
 }
-.lb-rank-1 {
-  background: linear-gradient(135deg, #ec4899, #a855f7);
+.lb-prize-amt {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
-.lb-rank-2 {
-  background: linear-gradient(135deg, #fb923c, #f59e0b);
-}
-.lb-rank-3 {
-  background: linear-gradient(135deg, #f472b6, #fb923c);
-}
-.lb-rank-4 {
-  background: #2a2335;
+.lb-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.06);
 }
 .lb-name {
   font-weight: 600;
 }
+/* Points shown as a coin pill (gold-bordered) on the right of each row. Sits
+   right after the prize pill; the row's flex gap spaces them apart. */
 .lb-pts {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px 7px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 172, 0, 0.55);
+  background: rgba(0, 0, 0, 0.28);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.02rem;
+  flex-shrink: 0;
+}
+.lb-coin {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+/* No prize pill (rank 4 = avatar, name, points) → push points to the right. */
+.lb-pts:nth-child(3) {
   margin-left: auto;
-  color: #f5a623;
-  font-weight: 600;
 }
 
 /* Countdown */

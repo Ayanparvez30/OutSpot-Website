@@ -63,12 +63,20 @@ const FEATURES = [
 // static image; Chat has no video so it stays an image.
 const VIDEO_SECTIONS = new Set(['explore', 'map', 'camera', 'challenges']);
 
+// Avatars live in /public/icons (filenames have spaces → encoded with %20).
+// `prize` is the cash amount for the top 3 (null = no prize, e.g. rank 4).
 const LEADERBOARD = [
-  { rank: 1, name: 'Alex', pts: '2,480' },
-  { rank: 2, name: 'Sam', pts: '2,105' },
-  { rank: 3, name: 'Jordan', pts: '1,890' },
-  { rank: 4, name: 'You', pts: '1,720' },
+  { rank: 1, name: 'Alex', pts: 2480, avatar: '/icons/Avatar%201.svg', prize: '$500' },
+  { rank: 2, name: 'Sam', pts: 2105, avatar: '/icons/Avatar%202.svg', prize: '$250' },
+  { rank: 3, name: 'Jordan', pts: 1890, avatar: '/icons/Avatar%203.svg', prize: '$100' },
+  { rank: 4, name: 'You', pts: 1720, avatar: '/icons/Avatar%206.svg', prize: null },
 ];
+
+// Coin icon shown beside each points value (already gold-coloured).
+const COIN_ICON = '/icons/Icon-Outline-Coin-P.svg';
+
+// 2480 → "2.4k" (truncated to one decimal, matching the design).
+const toK = (n) => `${Math.floor(n / 100) / 10}k`;
 
 // Left column then right column, filling the 2-col grid row by row.
 const LAUNCH_FEATURES = [
@@ -92,6 +100,40 @@ function PinIcon() {
         d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"
       />
     </svg>
+  );
+}
+
+// Leaderboard prize pill: a gold / silver / bronze pill holding a small medal
+// (ribbon + disc + rank number) and the cash amount. Built in code so it needs
+// no image assets. Top-3 only — returns null for ranks without a prize.
+const PRIZE_THEME = {
+  1: { pill: 'linear-gradient(180deg, #ffd96b, #f0a823)', disc: ['#ffe9a8', '#e8a21c'] }, // gold
+  2: { pill: 'linear-gradient(180deg, #e3e8f0, #aeb8c6)', disc: ['#f6f9fc', '#b9c2cf'] }, // silver
+  3: { pill: 'linear-gradient(180deg, #eaa472, #c66a33)', disc: ['#f7c79e', '#c66a33'] }, // bronze
+};
+function PrizePill({ rank, amount }) {
+  const theme = PRIZE_THEME[rank];
+  if (!theme || !amount) return null;
+  const [a, b] = theme.disc;
+  const id = `medal-${rank}`;
+  return (
+    <span className={`lb-prize lb-prize-${rank}`} style={{ background: theme.pill }}>
+      <svg className="lb-medal" viewBox="0 0 24 30" aria-hidden="true">
+        <defs>
+          <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor={a} />
+            <stop offset="1" stopColor={b} />
+          </linearGradient>
+        </defs>
+        <path d="M8 1 L12 12 L9 14 L5 4 Z" fill="#c14ff0" />
+        <path d="M16 1 L12 12 L15 14 L19 4 Z" fill="#ec4899" />
+        <circle cx="12" cy="19" r="9" fill={`url(#${id})`} stroke="rgba(255,255,255,.6)" strokeWidth="1" />
+        <text x="12" y="19" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="800" fill="#6b4400">
+          {rank}
+        </text>
+      </svg>
+      <span className="lb-prize-amt">{amount}</span>
+    </span>
   );
 }
 
@@ -627,13 +669,17 @@ export default function App() {
       {/* ---------------- Leaderboard ---------------- */}
       <section className="band">
         <span className="pill-badge">Compete</span>
-        <h2 className="band-title">Out-snap your friends</h2>
+        <h2 className="band-title">Climb the leaderboard</h2>
         <div className="lb-card">
           {LEADERBOARD.map((r) => (
             <div className="lb-row" key={r.rank}>
-              <span className={`lb-rank lb-rank-${r.rank}`}>{r.rank}</span>
+              <SafeImg src={r.avatar} alt="" className="lb-avatar" />
               <span className="lb-name">{r.name}</span>
-              <span className="lb-pts">{r.pts} pts</span>
+              <PrizePill rank={r.rank} amount={r.prize} />
+              <span className="lb-pts">
+                <img src={COIN_ICON} alt="" className="lb-coin" />
+                {toK(r.pts)}
+              </span>
             </div>
           ))}
         </div>
