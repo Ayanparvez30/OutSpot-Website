@@ -949,6 +949,113 @@ section[id] {
   min-height: 120px;
 }
 
+/* ---- Laptops + desktops (≥901px) ----
+   The original hero / feature / band sizing read oversized on both laptops and
+   large monitors, so the type, artwork, phone frame, and section padding are
+   scaled down across every screen at or above the mobile breakpoint. Only the
+   mobile (<900px) stacked layout is left on its own sizing. */
+@media (min-width: 901px) {
+  /* Navbar — smaller logo, icons, links + download button */
+  .nav {
+    padding: 11px clamp(20px, 4vw, 48px);
+  }
+  .brand-logo {
+    width: 38px;
+    height: 38px;
+  }
+  .brand-name {
+    font-size: 1.45rem;
+  }
+  .nav-links {
+    gap: clamp(16px, 2.4vw, 34px);
+  }
+  .nav-link {
+    font-size: 0.78rem;
+    gap: 5px;
+  }
+  .nav-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .nav-download {
+    padding: 11px 22px;
+    font-size: 0.92rem;
+  }
+
+  /* Hero — tighter width + padding, smaller title/sub + artwork */
+  .hero {
+    max-width: 1240px;
+    padding: clamp(32px, 5vw, 64px) clamp(20px, 4vw, 48px);
+    gap: 18px;
+  }
+  .hero-title {
+    font-size: clamp(2.4rem, 4.6vw, 3.8rem);
+  }
+  .hero-sub {
+    margin: 22px 0 28px;
+    font-size: 1.05rem;
+  }
+  .hero-art {
+    max-width: 760px;
+  }
+
+  /* Feature sections */
+  .features {
+    max-width: 1240px;
+    padding: clamp(16px, 3vw, 40px) clamp(20px, 4vw, 48px)
+      clamp(48px, 7vw, 96px);
+    gap: clamp(48px, 7vw, 100px);
+  }
+  .feature {
+    gap: clamp(28px, 4vw, 64px);
+  }
+  .feature-title {
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+  }
+  .feature-desc {
+    margin-top: 18px;
+    font-size: 1.02rem;
+  }
+  /* Standalone (non-video) preview image. */
+  .feature-visual > .feature-img {
+    max-width: 440px;
+  }
+  /* Phone video frame + its backdrop image (Bars / Restaurants cards) read too
+     big on a laptop — shrink the stack so both scale down together, keeping the
+     frame design and the backdrop ratio (155% / 192%) intact. */
+  .feature-stack {
+    max-width: 270px;
+  }
+  #explore .feature-stack,
+  #challenges .feature-stack {
+    max-width: 286px;
+  }
+
+  /* Centered bands (prize / leaderboard / countdown / waitlist / FAQ / CTA) */
+  .band {
+    max-width: 1000px;
+    padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 40px);
+  }
+  .band-title {
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+  }
+  .band-sub,
+  .prize-text {
+    font-size: 1.04rem;
+  }
+  .cta-inner {
+    max-width: 1000px;
+  }
+  .cta-title {
+    font-size: clamp(2rem, 4.5vw, 2.9rem);
+  }
+
+  /* Decorative wordmark band */
+  .bf-word {
+    font-size: clamp(3rem, 10vw, 6.5rem);
+  }
+}
+
 /* ---------------- Responsive ---------------- */
 @media (max-width: 900px) {
   .nav-links {
